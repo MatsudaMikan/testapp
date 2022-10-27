@@ -15,6 +15,11 @@
           window.location.replace('https://liff.line.me/1234567890-AbcdEfgh/path');
       });
       
+      // login call, only when external browser or LINE's in-app browser is used
+      if (!liff.isLoggedIn()) {
+          liff.login();
+      }
+      
       // print the environment in which the LIFF app is running
       console.log(liff.getLanguage());
       console.log(liff.getVersion());
