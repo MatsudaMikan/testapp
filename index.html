@@ -19,7 +19,6 @@
       <tr><th>liff.isLoggedIn()</th>       <td><span id="liff_logged_in"></span></td></tr>
       <tr><th>liff.getAccessToken()</th>   <td><span id="liff_access_token"></span></td></tr>
       <tr><th>liff.getIDToken()</th>       <td><span id="liff_id_token"></span></td></tr>
-      <tr><th>liff.getDecodedIDToken()</th><td><span id="liff_decoded_id_token"></span></td></tr>
       <tr><th>liff.getProfile()</th>       <td><span id="liff_profile"></span></td></tr>
       <tr><th>liff.getFriendship()</th>    <td><span id="liff_friendship"></span></td></tr>
     </table>
@@ -78,14 +77,14 @@
         
         // 現在のユーザのプロフィール情報
         liff.getProfile().then((profile) => {
-          var html = '';
-          html += 'userId: ' + profile.userId + '<br />';
-          html += 'displayName: ' + profile.displayName + '<br />';
-          html += 'pictureUrl: ' + profile.pictureUrl + '<br />';
-          html += 'statusMessage: ' + profile.statusMessage + '<br />';
-          document.getElementById('liff_profile').innerHtml = html;
-        }).catch((err) => {
-          // console.log("error", err);
+          if (profile) {
+            var html = '';
+            html += 'userId: ' + profile.userId + '<br />';
+            html += 'displayName: ' + profile.displayName + '<br />';
+            html += 'pictureUrl: ' + profile.pictureUrl + '<br />';
+            html += 'statusMessage: ' + profile.statusMessage + '<br />';
+            document.getElementById('liff_profile').innerHtml = html;
+          }
         });
         
         // ユーザとLINE公式アカウントの友だち関係
