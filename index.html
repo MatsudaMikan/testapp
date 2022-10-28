@@ -30,17 +30,16 @@
       // Javascriptが動作するか
       console.log('hello!');
 
-      document.getElementById('liff_os').innerText = 'undefined';
-      document.getElementById('liff_version').innerText = 'undefined';
-      document.getElementById('liff_line_version').innerText = 'undefined';
-      document.getElementById('liff_language').innerText = 'undefined';
-      document.getElementById('liff_in_client').innerText = 'undefined';
-      document.getElementById('liff_logged_in').innerText = 'undefined';
-      document.getElementById('liff_access_token').innerText = 'undefined';
-      document.getElementById('liff_id_token').innerText = 'undefined';
-      document.getElementById('liff_decoded_id_token').innerText = 'undefined';
-      document.getElementById('liff_profile').innerText = 'undefined';
-      document.getElementById('liff_friendship').innerText = 'undefined';
+      document.getElementById('liff_os').innerText = 'unknown';
+      document.getElementById('liff_version').innerText = 'unknown';
+      document.getElementById('liff_line_version').innerText = 'unknown';
+      document.getElementById('liff_language').innerText = 'unknown';
+      document.getElementById('liff_in_client').innerText = 'unknown';
+      document.getElementById('liff_logged_in').innerText = 'unknown';
+      document.getElementById('liff_access_token').innerText = 'unknown';
+      document.getElementById('liff_id_token').innerText = 'unknown';
+      document.getElementById('liff_profile').innerText = 'unknown';
+      document.getElementById('liff_friendship').innerText = 'unknown';
       
       // LIFF SDKの初期化
       liff.init({
@@ -77,14 +76,24 @@
         // 現在のユーザーの生のIDトークン
         document.getElementById('liff_id_token').innerText = liff.getIDToken();
         
-        // IDトークンのペイロード（ユーザ表示名・プロフィール画像URL・メールアドレス等）
-        document.getElementById('liff_decoded_id_token').innerText = liff.getDecodedIDToken();
-        
         // 現在のユーザのプロフィール情報
-        document.getElementById('liff_profile').innerText = liff.getProfile();
+        liff.getProfile().then((profile) => {
+          var html = '';
+          html += 'userId: ' + profile.userId + '<br />';
+          html += 'displayName: ' + profile.displayName + '<br />';
+          html += 'pictureUrl: ' + profile.pictureUrl + '<br />';
+          html += 'statusMessage: ' + profile.statusMessage + '<br />';
+          document.getElementById('liff_profile').innerHtml = html;
+        }).catch((err) => {
+          // console.log("error", err);
+        });
         
         // ユーザとLINE公式アカウントの友だち関係
-        document.getElementById('liff_friendship').innerText = liff.getFriendship();
+        liff.getFriendship().then((data) => {
+          if (data.friendFlag) {
+            document.getElementById('liff_friendship').innerText = data.friendFlag;
+          }
+        });
       });
       -->
     </script>
