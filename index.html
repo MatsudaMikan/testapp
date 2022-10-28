@@ -4,28 +4,77 @@
     <script charset="utf-8" src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
   </head>
   <body>
-    this is test application.
+    <h1>テストLIFFアプリケーション</h1>
+    <hr />
+    このWebサイトのアドレスは以下です。<br />
+    <a href="https://matsudamikan.github.io/testapp/index.html">https://matsudamikan.github.io/testapp/index.html</a><br />
+    <hr />
+    あなたの情報は以下です。<br />
+    <table>
+      <tr><th>liff.getOS()</th>            <td><span id="liff_os"></span></td></tr>
+      <tr><th>liff.getVersion()</th>       <td><span id="liff_version"></span></td></tr>
+      <tr><th>liff.getLineVersion()</th>   <td><span id="liff_line_version"></span></td></tr>
+      <tr><th>liff.getLanguage()</th>      <td><span id="liff_language"></span></td></tr>
+      <tr><th>liff.isInClient()</th>       <td><span id="liff_in_client"></span></td></tr>
+      <tr><th>liff.isLoggedIn()</th>       <td><span id="liff_logged_in"></span></td></tr>
+      <tr><th>liff.getAccessToken()</th>   <td><span id="liff_access_token"></span></td></tr>
+      <tr><th>liff.getIDToken()</th>       <td><span id="liff_id_token"></span></td></tr>
+      <tr><th>liff.getDecodedIDToken()</th><td><span id="liff_decoded_id_token"></span></td></tr>
+      <tr><th>liff.getProfile()</th>       <td><span id="liff_profile"></span></td></tr>
+      <tr><th>liff.getFriendship()</th>    <td><span id="liff_friendship"></span></td></tr>
+    </table>
+    <hr />
+    <a href="https://web.ss0.cisscloud.cac-pharma-sol.jp/~t01/base/login">統合営業支援ソリューションへ</a>
     <script>
+      <!--
+      // Javascriptが動作するか
       console.log('hello!');
       
+      // LIFF SDKの初期化
       liff.init({
-          liffId: '1657597383-2mmYnGK8', // Use own liffId
+          liffId: '1657597383-2mmYnGK8', // Line Developersで登録したLIFFアプリのLIFF ID
       }).then(() => {
-        // login call, only when external browser or LINE's in-app browser is used
+        // ログインしていない場合はログインを促す
         if (!liff.isLoggedIn()) {
             liff.login();
         }
-        // print the environment in which the LIFF app is running
-        document.write('liff.getLanguage() => ' + liff.getLanguage() + '<br />');
-        document.write('liff.getVersion() => ' + liff.getVersion() + '<br />');
-        document.write('liff.isInClient() => ' + liff.isInClient() + '<br />');
-        document.write('liff.isLoggedIn() => ' + liff.isLoggedIn() + '<br />');
-        document.write('liff.getOS() => ' + liff.getOS() + '<br />');
-        document.write('liff.getLineVersion() => ' + liff.getLineVersion() + '<br />');
         
-        window.alert('リダイレクトします');
-        window.location.href = 'https://web.ss0.cisscloud.cac-pharma-sol.jp/~t01/base/login';
+        // ios,android,webのいずれかが返る
+        document.getElementById('liff_os').value = liff.getOS();
+        
+        // LIFF SDKバージョンが返る
+        document.getElementById('liff_version').value = liff.getVersion();
+        
+        // ユーザのLINEアプリのバージョンが返る
+        document.getElementById('liff_line_version').value = liff.getLineVersion();
+        
+        // LIFFアプリの動作している言語が返る（navigator.language）
+        document.getElementById('liff_language').value = liff.getLanguage();
+        
+        // true: LIFFブラウザ上で動作、false: 外部ブラウザ／LINE内ブラウザで動作
+        document.getElementById('liff_in_client').value = liff.isInClient();
+
+        // ログイン状態か
+        document.getElementById('liff_logged_in').value = liff.isLoggedIn();
+        
+        // 現在のユーザーのアクセストークン
+        // NOTE: これをWebサイトに渡せばそのままLINEプラットフォームにアクセスできる
+        //       外部ブラウででLIFFアプリ起動時はliff.login()後にユーザがログインし、もう一度liff.init()してからじゃないとアクセストークンが取得できない
+        document.getElementById('liff_access_token').value = liff.getAccessToken();
+        
+        // 現在のユーザーの生のIDトークン
+        document.getElementById('liff_id_token').value = liff.getIDToken();
+        
+        // IDトークンのペイロード（ユーザ表示名・プロフィール画像URL・メールアドレス等）
+        document.getElementById('liff_decoded_id_token').value = liff.getDecodedIDToken();
+        
+        // 現在のユーザのプロフィール情報
+        document.getElementById('liff_profile').value = liff.getProfile();
+        
+        // ユーザとLINE公式アカウントの友だち関係
+        document.getElementById('liff_friendship').value = liff.getFriendship();
       });
+      -->
     </script>
   </body>
 </html>
